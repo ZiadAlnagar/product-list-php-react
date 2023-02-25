@@ -1,0 +1,48 @@
+{
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+        "psr/log": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "Core\\": "core/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "autoload:dev": "composer dump-autoload",
+        "autoload:prod": "composer dump-autoload -o",
+        "phpcs:check": "phpcs config core database utils src tests --standard=PSR12",
+        "phpcs": "phpcbf config core database utils src tests --standard=PSR12",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html=coverage",
+        "ecs:check": "ecs check",
+        "ecs": "ecs check --fix",
+        "phpstan": "phpstan analyse",
+        "psalm": "psalm",
+        "psalm:plugins": "psalm-plugin show",
+        "phpmd": "phpmd config/,core/,database/,utils/,src/,tests/,bootstrap.php,ecs.php,rector.php html phpmd.xml --reportfile reports/phpmd.html",
+        "phpcpd": "phpcpd config core database utils src tests bootstrap.php ecs.php rector.php",
+        "rector:init": "rector init",
+        "rector:check": "rector process --dry-run",
+        "rector": "rector process"
+    },
+    "require-dev": {
+        "symplify/easy-coding-standard": "11.2.4.72",
+        "symplify/coding-standard": "^11.1",
+        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan-phpunit": "^1.3",
+        "symplify/phpstan-extensions": "^11.1",
+        "phpunit/phpunit": "^9",
+        "vimeo/psalm": "^5.6",
+        "psalm/plugin-phpunit": "^0.18.4",
+        "phpmd/phpmd": "^2.13",
+        "sebastian/phpcpd": "^6.0",
+        "rector/rector": "^0.15.10"
+    }
+}

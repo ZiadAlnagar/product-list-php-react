@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<psalm xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    errorLevel="1"
+    resolveFromConfigFile="true">
+    <projectFiles>
+        <file name="bootstrap.php" />
+        <file name="ecs.php" />
+        <file name="rector.php" />
+        <directory name="config"/>
+        <directory name="core"/>
+        <directory name="database"/>
+        <directory name="src"/>
+        <directory name="tests"/>
+        <directory name="utils"/>
+        <ignoreFiles>
+            <directory name="vendor"/>
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <MissingPropertyType errorLevel="info"/>
+        <PossiblyInvalidMethodCall errorLevel="info"/>
+        <ArgumentTypeCoercion errorLevel="info"/>
+        <LessSpecificReturnStatement errorLevel="info"/>
+        <MoreSpecificReturnType errorLevel="info"/>
+        <InvalidStringClass errorLevel="info"/>
+        <MoreSpecificImplementedParamType errorLevel="info"/>
+        <InvalidNullableReturnType errorLevel="info"/>
+        <NullableReturnStatement errorLevel="info"/>
+        <PossiblyInvalidArgument errorLevel="info"/>
+        <MissingClosureReturnType errorLevel="info"/>
+        <DeprecatedMethod errorLevel="info"/>
+        <MissingParamType errorLevel="info"/>
+        <MissingClosureParamType errorLevel="info"/>
+        <MissingReturnType errorLevel="info"/>
+        <DeprecatedClass errorLevel="info"/>
+        <PossiblyNullReference errorLevel="info"/>
+        <PossiblyNullArgument errorLevel="info"/>
+        <PossiblyNullOperand errorLevel="info"/>
+        <UndefinedClass>
+            <errorLevel type="info">
+                <directory name="tests"/>
+            </errorLevel>
+        </UndefinedClass>
+        <PossiblyUndefinedMethod>
+            <errorLevel type="info">
+                <directory name="tests"/>
+            </errorLevel>
+        </PossiblyUndefinedMethod>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="info">
+                <directory name="tests"/>
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        <InternalMethod>
+            <errorLevel type="info">
+                <directory name="tests"/>
+            </errorLevel>
+        </InternalMethod>
+    </issueHandlers>
+<plugins><pluginClass class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>
