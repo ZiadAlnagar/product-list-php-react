@@ -1,0 +1,75 @@
+@mixin border($w: 2px) {
+  border: $w solid $primary;
+  &:hover,
+  &:active,
+  &:focus-within {
+    border: $w solid $secondary;
+  }
+}
+
+@mixin customBr($y-pos, $w, $h, $bg, $opac) {
+  content: '';
+  display: block;
+  position: relative;
+  left: 0px;
+  top: $y-pos;
+  width: $w;
+  height: $h;
+  margin: auto;
+  background-color: $bg;
+  opacity: $opac;
+}
+
+@mixin helpers {
+  @each $property, $prop-values in $helpers-map {
+    @if $property == display {
+      @each $value in $prop-values {
+        .#{$value} {
+          #{$property}: $value;
+        }
+      }
+    }
+    @if $property == flex-direction {
+      @each $value in $prop-values {
+        $prop-name: selector-shorten($value, 3);
+        .#{$prop-name} {
+          #{$property}: $value;
+        }
+      }
+    }
+    @if $property == flex-wrap {
+      @each $value in $prop-values {
+        .#{$value} {
+          #{$property}: $value;
+        }
+      }
+    }
+    @if $property == justify-content {
+      @each $value in $prop-values {
+        $prop-name: str-nth($value, 2);
+        .justify-#{$prop-name} {
+          #{$property}: $value;
+        }
+      }
+    }
+    @if $property == align-content {
+      @each $value in $prop-values {
+        $prop-name: str-nth($value, 2);
+        .content-#{$prop-name} {
+          #{$property}: $value;
+        }
+      }
+    }
+    @if $property == align-items {
+      @each $value in $prop-values {
+        $prop-name: str-nth($value, 2);
+        .items-#{$prop-name} {
+          #{$property}: $value;
+        }
+        .self-#{$prop-name} {
+          align-self: $value;
+        }
+      }
+    }
+  }
+}

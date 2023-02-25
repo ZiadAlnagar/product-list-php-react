@@ -1,0 +1,15 @@
+.alert {
+  width: 75%;
+  padding: 20px;
+  margin: -20px auto;
+  margin-top: 20px;
+  font-size: 14px;
+  border-radius: 10px;
+
+  &--error {
+    @extend .alert;
+    color: #b91c1c;
+    background-color: #fee2e2;
+    border: 3px solid #ef4444;
+  }
+}

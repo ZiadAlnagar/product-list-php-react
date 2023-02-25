@@ -1,0 +1,49 @@
+@function str-split($string, $separator) {
+  // empty array/list
+  $split-arr: ();
+  // first index of separator in string
+  $index: str-index($string, $separator);
+  // loop through string
+  @while $index != null {
+    // get the substring from the first character to the separator
+    $item: str-slice($string, 1, $index - 1);
+    // push item to array
+    $split-arr: append($split-arr, $item);
+    // remove item and separator from string
+    // $string: str-slice($string, $index + 1);
+    $string: str-slice($string, $index + str-length($separator));
+    // find new index of separator
+    $index: str-index($string, $separator);
+  }
+  // add the remaining string to list (the last item)
+  $split-arr: append($split-arr, $string);
+
+  @return $split-arr;
+}
+
+@function selector-shorten($string, $len) {
+  $split: str-split($string, '-');
+  $prop-name: $string;
+  $first: nth($split, 1);
+  @if (str-length($first) > $len) {
+    $prop-name: str-slice($first, 0, $len);
+    @each $segment in $split {
+      @if $segment != $first {
+        $prop-name: $prop-name + '-' + $segment;
+      }
+    }
+  }
+  @return $prop-name;
+}
+
+@function str-nth($string, $nth) {
+  $split: str-split($string, '-');
+  $new-string: "";
+  @if (length($split) >= $nth) {
+    $new-string: nth($split, $nth);
+  }
+  @else {
+    $new-string: nth($split, 1);
+  }
+  @return $new-string;
+}

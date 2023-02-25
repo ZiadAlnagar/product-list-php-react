@@ -1,0 +1,37 @@
+.products {
+  &-list {
+    padding: 25px 0px;
+  }
+
+  .product {
+    position: relative;
+    width: 23.5%;
+    max-width: 23.5%;
+    margin: 10px 0px;
+
+    &-card {
+      width: 80%;
+      max-width: 80%;
+      height: 100px;
+      max-height: 100px;
+      padding: 32px 10%;
+      @include border;
+      border-radius: 2px;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    &-delete {
+      $pos: 10px;
+      position: absolute;
+      top: $pos;
+      left: $pos;
+
+      .delete-checkbox {
+        $size: 15px;
+        width: $size;
+        height: $size;
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.field {
+  $parent: &;
+
+  margin: 24px 0px;
+
+  .input-label {
+    margin-bottom: 4px;
+  }
+
+  input:has(+ .input-error) {
+    border-color: #ef4444;
+  }
+}

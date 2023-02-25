@@ -1,0 +1,21 @@
+@import './variables';
+@import './functions';
+@import './minixs';
+@import './elements';
+@import './components/loader';
+@import './pages/loader';
+
+@include helpers;
+
+.container {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.active {
+  border-color: $secondary;
+}

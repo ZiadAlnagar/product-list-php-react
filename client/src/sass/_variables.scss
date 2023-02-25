@@ -1,0 +1,34 @@
+$font: Arial, Helvetica, sans-serif;
+$color: #212427;
+$primary: #e8a317;
+$secondary: #ee6b2b;
+
+$flex-shared: flex-start, flex-end, center;
+$flex-shared-variant: join($flex-shared, (space-between, space-around));
+$flex-shared-variant-1: join($flex-shared, (stretch, baseline));
+$helpers-map: (
+  display: (
+    inline,
+    block,
+    flex,
+    grid,
+    inline-block,
+    inline-flex,
+    inline-grid,
+  ),
+  flex-direction: (
+    row,
+    row-reverse,
+    column,
+    column-reverse,
+  ),
+  flex-wrap: (
+    nowrap,
+    wrap,
+    wrap-reverse,
+  ),
+  justify-content: join($flex-shared-variant, (space-evenly)),
+  align-content: join($flex-shared-variant, (space-evenly, baseline)),
+  align-items: $flex-shared-variant-1,
+  align-self: join($flex-shared-variant-1, (auto)),
+);

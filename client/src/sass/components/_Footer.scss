@@ -1,0 +1,9 @@
+footer {
+  font-style: oblique;
+  text-align: center;
+  margin: 50px 0px;
+
+  &:before {
+    @include customBr(-50px, 80%, 1px, black, 25%);
+  }
+}
