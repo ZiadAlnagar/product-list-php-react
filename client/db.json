@@ -1,0 +1,25 @@
+{
+  "products": [
+    {
+      "sku": "GGWP007",
+      "name": "Peace and War",
+      "price": "1000",
+      "type": "0",
+      "attribute": "2.5"
+    },
+    {
+      "sku": "GGWP107",
+      "name": "Peace and War",
+      "price": "500",
+      "type": "1",
+      "attribute": "5000"
+    },
+    {
+      "sku": "GGWP207",
+      "name": "Peace and War",
+      "price": "250",
+      "type": "2",
+      "attribute": "100x100x100"
+    }
+  ]
+}

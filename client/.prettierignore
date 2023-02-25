@@ -1,0 +1,5 @@
+build
+coverage
+
+cypress/*
+!cypress/e2e
