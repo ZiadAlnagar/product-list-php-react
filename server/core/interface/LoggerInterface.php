@@ -8,5 +8,8 @@ use Exception;
 
 interface LoggerInterface
 {
-    public static function log(string|Exception $message): void;
+    /**
+     * @param string|\Exception $message
+     */
+    public static function log($message): void;
 }

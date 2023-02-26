@@ -6,7 +6,10 @@ namespace Core\Interface;
 
 interface ConfigInterface
 {
-    public static function get(string $key, string $default): mixed;
+    /**
+     * @return mixed
+     */
+    public static function get(string $key, string $default);
 
 
     public static function getAll(): array;

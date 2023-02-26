@@ -50,12 +50,15 @@ class DB
     }
 
 
+    /**
+     * @return mixed[]|int|null
+     */
     public function query(
         string $query,
         array $bind = null,
         int $fetchmode = PDO::FETCH_ASSOC,
         bool $debug = false
-    ): array|int|null {
+    ) {
         $query = trim($query);
         $this->prepare($query, $debug);
         $this->success = $this->query->execute($bind);
@@ -73,7 +76,10 @@ class DB
     }
 
 
-    public function lastInsertId(): string|false
+    /**
+     * @return string|true
+     */
+    public function lastInsertId()
     {
         return $this->pdo->lastInsertId();
     }
@@ -133,7 +139,10 @@ thrown
     }
 
 
-    private function log(string|Exception $message): void
+    /**
+     * @param string|\Exception $message
+     */
+    private function log($message): void
     {
         if (! $this->logger) {
         } else {

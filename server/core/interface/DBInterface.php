@@ -12,10 +12,16 @@ interface DBInterface
     public static function load(array $settings, LoggerInterface $logger, int $ins): DB;
 
 
-    public function query(string $query, string $bind, int $fetchmode, bool $debug): array|int|null;
+    /**
+     * @return mixed[]|int|null
+     */
+    public function query(string $query, string $bind, int $fetchmode, bool $debug);
 
 
-    public function lastInsertId(): string|false;
+    /**
+     * @return string|true
+     */
+    public function lastInsertId();
 
 
     public function table(): Table;

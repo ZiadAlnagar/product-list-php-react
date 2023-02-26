@@ -27,8 +27,9 @@ if (! function_exists('trimQuery')) {
 if (! function_exists('fill')) {
     /**
      * @param  string $value
+     * @param string|mixed[] $needle
      */
-    function fill(string|array $value, string $template = ':?', string|array $needle = '?'): string
+    function fill($value, string $template = ':?', $needle = '?'): string
     {
         $result = $template;
         if (is_array($value)) {
@@ -98,9 +99,9 @@ if (! function_exists('send')) {
 
 if (! function_exists('sendError')) {
     /**
-     * @param  string|null $body
+     * @param string|mixed[] $body
      */
-    function sendError(int $code = 400, string|array $body = null): void
+    function sendError(int $code = 400, $body = null): void
     {
         $error = null;
         if ($body) {
@@ -123,7 +124,10 @@ if (! function_exists('env')) {
 
 if (! function_exists('config')) {
 
-    function config(string $key, string $default = null): mixed
+    /**
+     * @return mixed
+     */
+    function config(string $key, string $default = null)
     {
         return Config::get($key, $default);
     }
@@ -132,7 +136,10 @@ if (! function_exists('config')) {
 
 if (! function_exists('log_write')) {
 
-    function log_write(string|Exception $message): void
+    /**
+     * @param string|\Exception $message
+     */
+    function log_write($message): void
     {
         Logger::log($message);
     }

@@ -70,7 +70,10 @@ class Env implements EnvInterface
     }
 
 
-    private static function log(Exception|string $message): void
+    /**
+     * @param \Exception|string $message
+     */
+    private static function log($message): void
     {
         if (! self::$logger) {
         } else {

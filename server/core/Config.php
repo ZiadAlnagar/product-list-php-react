@@ -40,7 +40,10 @@ class Config implements ConfigInterface
     }
 
 
-    public static function get(string $key, string $default = null): mixed
+    /**
+     * @return mixed
+     */
+    public static function get(string $key, string $default = null)
     {
         if (! self::$instance) {
             self::load();
@@ -50,10 +53,16 @@ class Config implements ConfigInterface
         try {
             foreach ($path as $i => $k) {
                 if ($i === 0) {
-                    $currConf = self::$config[$k] ?? $default ?? throw new ConfigException($key);
+                    if ($default === null) {
+                        throw new ConfigException($key);
+                    }
+                    $currConf = self::$config[$k] ?? $default;
                     continue;
                 }
-                $currConf = $currConf[$k] ?? $default ?? throw new ConfigException($key);
+                if ($default === null) {
+                    throw new ConfigException($key);
+                }
+                $currConf = $currConf[$k] ?? $default;
             }
         } catch (ConfigException $e) {
             self::log($e);
@@ -90,7 +99,10 @@ class Config implements ConfigInterface
     }
 
 
-    private static function log(Exception|string $message): void
+    /**
+     * @param \Exception|string $message
+     */
+    private static function log($message): void
     {
         if (! self::$logger) {
         } else {

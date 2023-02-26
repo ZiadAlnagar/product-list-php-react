@@ -13,7 +13,10 @@ class Logger implements LoggerInterface
     private static $logFile = __DIR__ . '/../logs/test.log';
 
 
-    public static function log(string|Exception $message): void
+    /**
+     * @param string|\Exception $message
+     */
+    public static function log($message): void
     {
         try {
             error_log($message->getMessage() . PHP_EOL, 3, self::$logFile);
