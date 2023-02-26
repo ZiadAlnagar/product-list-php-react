@@ -9,12 +9,19 @@ use App\Models\Product;
 class ProductController
 {
     private ?string $requestMethod;
+
     private ?int $productId;
+
     private ?string $subRoute;
+
     private ?string $subValue;
 
-    public function __construct(string $requestMethod, ?int $productId, ?string $subRoute, ?string $subValue)
-    {
+    public function __construct(
+        string $requestMethod,
+        ?int $productId,
+        ?string $subRoute,
+        ?string $subValue
+    ) {
         $this->requestMethod = $requestMethod;
         $this->productId = $productId;
         $this->subRoute = $subRoute;
@@ -31,7 +38,7 @@ class ProductController
                     $this->isUnique($this->subRoute, $this->subValue);
                 } else {
                     $this->index();
-                };
+                }
                 break;
             case 'POST':
                 $this->store();
@@ -57,7 +64,7 @@ class ProductController
     private function show($id)
     {
         $result = Product::findById($id);
-        if (!$result) {
+        if (! $result) {
             return $this->notFoundResponse();
         }
         send(200, $result);
@@ -65,10 +72,11 @@ class ProductController
 
     private function store()
     {
-        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+        $input = (array) json_decode(file_get_contents('php://input'), true);
         // return send(201, $input);
-        if (!$this->validateRequest($input))
+        if (! $this->validateRequest($input)) {
             return $this->unprocessableEntityResponse();
+        }
         $newProduct = Product::save(...$this->fixTypes($input));
         send(201, $newProduct());
     }
@@ -76,14 +84,18 @@ class ProductController
     private function isUnique($segment, $value)
     {
         $result = null;
-        if ($segment === 'sku')
+        if ($segment === 'sku') {
             $result = Product::findBySku($value);
-        else
+        } else {
             return $this->notFoundResponse();
+        }
 
         if ($result) {
             $result = false;
-            sendError(409, ['unique' => $result, 'message' => 'sku must be unique']);
+            sendError(409, [
+                'unique' => $result,
+                'message' => 'sku must be unique',
+            ]);
         } else {
             $result = true;
             send(200);
@@ -93,11 +105,11 @@ class ProductController
     private function update(int $id)
     {
         $result = Product::findById($id);
-        if (!$result) {
+        if (! $result) {
             return $this->notFoundResponse();
         }
-        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        if (!$this->validateRequest($input)) {
+        $input = (array) json_decode(file_get_contents('php://input'), true);
+        if (! $this->validateRequest($input)) {
             return $this->unprocessableEntityResponse();
         }
         $updatedProduct = Product::update($id, $input);
@@ -112,15 +124,16 @@ class ProductController
             $result = Product::findById($id);
             Product::removeOne($id);
         } else {
-            $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-            if (!isset($input['ids']))
+            $input = (array) json_decode(file_get_contents('php://input'), true);
+            if (! isset($input['ids'])) {
                 $result = null;
-            else {
+            } else {
                 $ids = $input['ids'];
                 [$where, $keys] = placeHolderSeq(count($ids), 'id');
                 Product::setWhere($where);
-                if (count($ids) > 0)
+                if (count($ids) > 0) {
                     $result = Product::remove(array_combine($keys, $ids));
+                }
             }
         }
         send(204);
@@ -128,16 +141,21 @@ class ProductController
 
     private function validateRequest($input)
     {
-        if (!isset($input['sku']))
+        if (! isset($input['sku'])) {
             return false;
-        if (!isset($input['name']))
+        }
+        if (! isset($input['name'])) {
             return false;
-        if (!isset($input['price']))
+        }
+        if (! isset($input['price'])) {
             return false;
-        if (!isset($input['type']))
+        }
+        if (! isset($input['type'])) {
             return false;
-        if (!isset($input['attribute']))
+        }
+        if (! isset($input['attribute'])) {
             return false;
+        }
 
         $sku = $input['sku'];
         $name = $input['name'];
@@ -145,29 +163,40 @@ class ProductController
         $type = $input['type'];
         $attribute = $input['attribute'];
 
-        if (strlen($sku) !== 8)
+        if (strlen($sku) !== 8) {
             return false;
-        if (strlen($name) < 2 || strlen($name) > 150)
+        }
+        if (strlen($name) < 2 || strlen($name) > 150) {
             return false;
-        if (!is_numeric($price) || floatval($price) <= 0)
+        }
+        if (! is_numeric($price) || floatval($price) <= 0) {
             return false;
-        if (!is_numeric($type))
+        }
+        if (! is_numeric($type)) {
             return false;
+        }
 
         $type = (int) $type;
-        if ($type === 0)
-            if (!is_numeric($attribute) || floatval($attribute) <= 0)
+        if ($type === 0) {
+            if (! is_numeric($attribute) || floatval($attribute) <= 0) {
                 return false;
-        if ($type === 1)
-            if (!is_numeric($attribute) || intval($attribute) <= 0)
+            }
+        }
+        if ($type === 1) {
+            if (! is_numeric($attribute) || intval($attribute) <= 0) {
                 return false;
+            }
+        }
         if ($type === 2) {
-            if (substr_count($attribute, 'x') !== 2)
+            if (substr_count($attribute, 'x') !== 2) {
                 return false;
-            $values = explode("x", $attribute);
-            foreach ($values as $v)
-                if (!is_numeric($v) || floatval($v) <= 0)
+            }
+            $values = explode('x', $attribute);
+            foreach ($values as $v) {
+                if (! is_numeric($v) || floatval($v) <= 0) {
                     return false;
+                }
+            }
         }
         return true;
     }
@@ -191,10 +220,12 @@ class ProductController
         $attribute = $input['attribute'];
 
         $type = (int) $type;
-        if ($type === 0)
+        if ($type === 0) {
             $attribute = (float) $attribute;
-        if ($type === 1)
+        }
+        if ($type === 1) {
             $attribute = (int) $attribute;
+        }
         return [$sku, $name, (float) $price, $type, $attribute];
     }
 }

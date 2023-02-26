@@ -8,45 +8,27 @@ use Core\Interface\TableInterface;
 
 class Table implements TableInterface
 {
-    /**
-     * @var string
-     */
     public static string $select = '*';
 
-    /**
-     * @var string
-     */
+
     public static string $from = '';
 
-    /**
-     * @var string
-     */
+
     public static string $where = '';
 
-    /**
-     * @var string|null
-     */
+
     public static ?string $options = null;
 
-    /**
-     * @var array
-     */
+
     public static array $orderBy = [null, 'DESC'];
 
-    /**
-     * @var string
-     */
+
     public static string $fields = '';
 
-    /**
-     * @var string|null
-     */
+
     public static ?string $constraints = null;
 
-    /**
-     * @param  string $tname
-     * @return string
-     */
+
     public static function create(string $tname): string
     {
         [$fields, $constraints, $options] = self::injectCreate();
@@ -61,11 +43,7 @@ class Table implements TableInterface
         return $query;
     }
 
-    /**
-     * @param  string $tname
-     * @param  string $commands
-     * @return string
-     */
+
     public static function alter(string $tname, string $commands): string
     {
         $query = "ALTER TABLE `{$tname}` ";
@@ -74,10 +52,7 @@ class Table implements TableInterface
         return $query;
     }
 
-    /**
-     * @param  string $tname
-     * @return string
-     */
+
     public static function drop(string $tname): string
     {
         $query = "DROP TABLE IF EXISTS `{$tname}`;";
@@ -85,9 +60,7 @@ class Table implements TableInterface
         return $query;
     }
 
-    /**
-     * @return string
-     */
+
     public static function select(): string
     {
         [$select, $from, $where, $options, $orderBy] = self::injectSelect();
@@ -100,11 +73,7 @@ class Table implements TableInterface
         return $query;
     }
 
-    /**
-     * @param  string $tname
-     * @param  array  $colnames
-     * @return array
-     */
+
     public static function insert(string $tname, array $colnames): array
     {
         self::default();
@@ -116,11 +85,7 @@ class Table implements TableInterface
         return [$query, $placeHolders];
     }
 
-    /**
-     * @param  string $tname
-     * @param  array $colnames
-     * @return array
-     */
+
     public static function update(string $tname, array $colnames): array
     {
         [$where, $options] = self::injectUpdate();
@@ -134,24 +99,19 @@ class Table implements TableInterface
         return [$query, $placeHolders];
     }
 
-    /**
-     * @param  string $tname
-     * @return string
-     */
+
     public static function delete(string $tname): string
     {
         [$where, $options] = self::injectDelete();
         self::default();
-        $query = "DELETE FROM $tname ";
-        $query .= $where ? "WHERE $where " : '';
+        $query = "DELETE FROM {$tname} ";
+        $query .= $where ? "WHERE {$where} " : '';
         $query .= $options ?? '';
         $query = trimQuery($query);
         return $query;
     }
 
-    /**
-     * @return void
-     */
+
     public static function default(): void
     {
         self::$select = '*';
@@ -161,33 +121,25 @@ class Table implements TableInterface
         self::$orderBy = [null, 'DESC'];
     }
 
-    /**
-     * @return array
-     */
+
     private static function injectCreate(): array
     {
         return [self::$fields, self::$constraints, self::$options];
     }
 
-    /**
-     * @return array
-     */
+
     private static function injectSelect(): array
     {
         return [self::$select, self::$from, self::$where, self::$options, self::$orderBy];
     }
 
-    /**
-     * @return array
-     */
+
     private static function injectUpdate(): array
     {
         return [self::$where, self::$options];
     }
 
-    /**
-     * @return array
-     */
+
     private static function injectDelete(): array
     {
         return [self::$where, self::$options];

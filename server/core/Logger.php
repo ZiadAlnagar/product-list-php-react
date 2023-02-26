@@ -10,12 +10,9 @@ use Exception;
 
 class Logger implements LoggerInterface
 {
-    private static $logFile = __DIR__ . "/../logs/test.log";
+    private static $logFile = __DIR__ . '/../logs/test.log';
 
-    /**
-     * @param  string|Exception $message
-     * @return void
-     */
+
     public static function log(string|Exception $message): void
     {
         try {

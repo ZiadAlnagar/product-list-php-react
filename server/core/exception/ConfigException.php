@@ -1,23 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Core\Exception;
 
 use OutOfBoundsException;
 
 class ConfigException extends OutOfBoundsException
 {
-    /**
-     * @param  string $key
-     */
     public function __construct(string $key)
     {
         parent::__construct($this->message($key));
     }
 
-    /**
-     * @param  string $key
-     * @return string
-     */
+
     private function message(string $key): string
     {
         return "

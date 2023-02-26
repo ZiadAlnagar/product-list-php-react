@@ -4,80 +4,47 @@ declare(strict_types=1);
 
 namespace Core;
 
+use Core\Exception\ConfigException;
 use Core\Interface\ConfigInterface;
 use Core\Interface\LoggerInterface;
-use Core\Exception\ConfigException;
 use Exception;
 
 class Config implements ConfigInterface
 {
-    /**
-     * @var Config|null
-     */
     private static ?Config $instance = null;
 
-    /**
-     * @var array
-     */
+
     private static array $config;
 
-    /**
-     * @var LoggerInterface
-     */
+
     private static LoggerInterface $logger;
 
-    /**
-     * @param  LoggerInterface|null $logger
-     */
+
     private function __construct(LoggerInterface $logger = null)
     {
-        if ($logger)
+        if ($logger) {
             self::$logger = $logger;
+        }
         $this->loadEnv();
     }
 
-    /**
-     * @param  LoggerInterface|null $logger
-     * @return Config
-     */
-    public static function load(LoggerInterface $logger = null): Config
+
+    public static function load(LoggerInterface $logger = null): self
     {
-        if (!self::$instance)
+        if (! self::$instance) {
             self::$instance = new self($logger);
-        else if ($logger && !self::$logger)
+        } elseif ($logger && ! self::$logger) {
             self::$logger = $logger;
+        }
         return self::$instance;
     }
 
-    /**
-     * Loads config files from /config/*.php
-     *
-     * The function assumes config files location in root folder.
-     * Some config files use `env()` from `/core/Helpers.php`,
-     * so we require it to avoid errors
-     * @return void
-     */
-    private function loadEnv()
-    {
-        $configArr = [];
-        require __DIR__ . '/Helpers.php';
-        $files = glob(__DIR__ . '/../config/*.{php}', GLOB_BRACE);
-        foreach ($files as $file) {
-            $confName = basename($file, '.php');
-            $configArr[$confName] = require $file;
-        }
-        self::$config = $configArr;
-    }
 
-    /**
-     * @param  string      $key
-     * @param  string|null $default
-     * @return mixed
-     */
     public static function get(string $key, string $default = null): mixed
     {
-        if (!self::$instance)
+        if (! self::$instance) {
             self::load();
+        }
         $path = explode('.', $key);
         $currConf = null;
         try {
@@ -94,23 +61,40 @@ class Config implements ConfigInterface
         return $currConf;
     }
 
-    /**
-     * @return array
-     */
+
     public static function getAll(): array
     {
-        if (!self::$config)
+        if (! self::$config) {
             self::load();
+        }
         return self::$config;
     }
 
     /**
-     * @param  Exception|string $message
-     * @return void
+     * Loads config files from /config/*.php
+     *
+     * The function assumes config files location in root folder.
+     * Some config files use `env()` from `/core/Helpers.php`,
+     * so we require it to avoid errors
      */
+    private function loadEnv()
+    {
+        $configArr = [];
+        require __DIR__ . '/Helpers.php';
+        $files = glob(__DIR__ . '/../config/*.{php}', GLOB_BRACE);
+        foreach ($files as $file) {
+            $confName = basename($file, '.php');
+            $configArr[$confName] = require $file;
+        }
+        self::$config = $configArr;
+    }
+
+
     private static function log(Exception|string $message): void
     {
-        if (!self::$logger) {
-        } else self::$logger->log($message);
+        if (! self::$logger) {
+        } else {
+            self::$logger->log($message);
+        }
     }
 }
