@@ -38,11 +38,10 @@
 
 @function str-nth($string, $nth) {
   $split: str-split($string, '-');
-  $new-string: "";
+  $new-string: '';
   @if (length($split) >= $nth) {
     $new-string: nth($split, $nth);
-  }
-  @else {
+  } @else {
     $new-string: nth($split, 1);
   }
   @return $new-string;
