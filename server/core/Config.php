@@ -31,9 +31,9 @@ class Config implements ConfigInterface
 
     public static function load(LoggerInterface $logger = null): self
     {
-        if (! self::$instance) {
+        if (!self::$instance) {
             self::$instance = new self($logger);
-        } elseif ($logger && ! self::$logger) {
+        } elseif ($logger && !self::$logger) {
             self::$logger = $logger;
         }
         return self::$instance;
@@ -45,7 +45,7 @@ class Config implements ConfigInterface
      */
     public static function get(string $key, string $default = null)
     {
-        if (! self::$instance) {
+        if (!self::$instance) {
             self::load();
         }
         $path = explode('.', $key);
@@ -53,16 +53,16 @@ class Config implements ConfigInterface
         try {
             foreach ($path as $i => $k) {
                 if ($i === 0) {
-                    if ($default === null) {
+                    $currConf = self::$config[$k] ?? $default;
+                    if (!$currConf) {
                         throw new ConfigException($key);
                     }
-                    $currConf = self::$config[$k] ?? $default;
                     continue;
                 }
-                if ($default === null) {
+                $currConf = $currConf[$k] ?? $default;
+                if ($currConf === null) {
                     throw new ConfigException($key);
                 }
-                $currConf = $currConf[$k] ?? $default;
             }
         } catch (ConfigException $e) {
             self::log($e);
@@ -73,7 +73,7 @@ class Config implements ConfigInterface
 
     public static function getAll(): array
     {
-        if (! self::$config) {
+        if (!self::$config) {
             self::load();
         }
         return self::$config;
@@ -104,7 +104,7 @@ class Config implements ConfigInterface
      */
     private static function log($message): void
     {
-        if (! self::$logger) {
+        if (!self::$logger) {
         } else {
             self::$logger->log($message);
         }

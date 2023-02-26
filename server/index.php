@@ -5,19 +5,16 @@ declare(strict_types=1);
 require 'bootstrap.php';
 
 use App\Controllers\ProductController;
-use App\Middleware\UnknownEndpoint;
+use App\Middlewares\UnknownEndpoint;
 use App\Models\Product;
 use Core\Config;
 use Core\DB;
 use Core\Env;
-// use App\Middleware\ErrorMiddleware;
 use Core\Logger;
 
 $env = Env::load(new Logger());
 $config = Config::load(new Logger());
-
-require './utils/db_helper.php';
-require './database/products_table.php';
+require __DIR__ . '/utils/db_helper.php';
 
 Product::loadDependencies(DB::load(), new Logger());
 
@@ -60,5 +57,3 @@ if ($uri[1] === 'api' && $uri[2] === 'products') {
     $unknowEndpoint();
     exit();
 }
-
-// require './database/factory.php';

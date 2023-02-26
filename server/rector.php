@@ -7,7 +7,7 @@ use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\DowngradeLevelSetList;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([__DIR__ . '/config', __DIR__ . '/core', __DIR__ . '/database', __DIR__ . '/bootstrap.php']);
+    $rectorConfig->paths([__DIR__ . '/config', __DIR__ . '/core', __DIR__ . '/database', __DIR__ . '/src', __DIR__ . '/tests', __DIR__ . '/utils', __DIR__ . '/index.php', __DIR__ . '/bootstrap.php']);
 
     // register a single rule
     $rectorConfig->rule(InlineConstructorDefaultToPropertyRector::class);

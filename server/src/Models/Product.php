@@ -51,11 +51,14 @@ abstract class Product
     protected string $attribute;
 
 
+    /**
+     * @param string|int|float $attribute
+     */
     public function __construct(
         string $sku,
         string $name,
         float $price,
-        string|int|float $attribute
+        $attribute
     ) {
         $this->sku = $sku;
         $this->name = $name;
@@ -79,13 +82,14 @@ abstract class Product
 
     /**
      * @return Product
+     * @param string|int|float $attribute
      */
     public static function save(
         string $sku,
         string $name,
         float $price,
         int $type,
-        string|int|float $attribute
+        $attribute
     ) {
         $classType = ucfirst(array_search($type, self::$types, true));
         $class = __NAMESPACE__ . '\\' . $classType;
@@ -102,7 +106,7 @@ abstract class Product
     }
 
 
-    public static function findById(int $id): array|null
+    public static function findById(int $id): ?array
     {
         self::$tbl::$where = 'id = :id';
         self::$tbl::$options = 'LIMIT :limit';
@@ -119,7 +123,7 @@ abstract class Product
     /**
      * @param  int   $sku
      */
-    public static function findBySku(string $sku): array|null
+    public static function findBySku(string $sku): ?array
     {
         self::$tbl::$where = 'sku = :sku';
         self::$tbl::$options = 'LIMIT :limit';
@@ -144,10 +148,7 @@ abstract class Product
     {
         $type = self::getType($type);
         self::setWhere('type = :type');
-        return self::find([
-            ':type' => $type,
-            ...$bind,
-        ]);
+        return self::find(array_merge([':type' => $type], $bind));
     }
 
     public static function update()
@@ -230,7 +231,7 @@ abstract class Product
     }
 
 
-    private static function getType(string $type): int|null
+    private static function getType(string $type): ?int
     {
         $type = strtolower($type);
         try {
@@ -244,7 +245,10 @@ abstract class Product
     }
 
 
-    private static function log(Exception|string $message): void
+    /**
+     * @param \Exception|string $message
+     */
+    private static function log($message): void
     {
         self::$logger::log($message);
     }

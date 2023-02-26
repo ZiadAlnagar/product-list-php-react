@@ -2,5 +2,5 @@
 
 declare(strict_types=1);
 
-require 'vendor/autoload.php';
-require 'core/Helpers.php';
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/core/Helpers.php';

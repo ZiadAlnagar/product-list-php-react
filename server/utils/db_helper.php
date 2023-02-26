@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Core\Config;
 use Core\DB;
 use Core\Logger;
 
