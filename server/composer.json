@@ -18,6 +18,7 @@
     "scripts": {
         "autoload:dev": "composer dump-autoload",
         "autoload:prod": "composer dump-autoload -o",
+        "build:ui": "rm -rf public && cd ../client/ && npm run build:server",
         "phpcs:check": "phpcs config core database utils src tests --standard=PSR12",
         "phpcs": "phpcbf config core database utils src tests --standard=PSR12",
         "test": "phpunit",

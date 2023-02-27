@@ -26,8 +26,8 @@ const Index = () => {
     <div>
       <Header>
         <PageTitle text='Product List'>
-          <Button label='add' onClick={addBtnClick} />
-          <BtnForm label='mass delete' id='delete-product-btn' onSubmit={deleteFormHandle} />
+          <Button label='ADD' onClick={addBtnClick} />
+          <BtnForm label='MASS DELETE' id='delete-product-btn' onSubmit={deleteFormHandle} />
         </PageTitle>
       </Header>
       <div className='main'>

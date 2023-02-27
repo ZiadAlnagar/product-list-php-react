@@ -41,7 +41,11 @@ class ProductController
                 }
                 break;
             case 'POST':
-                $this->store();
+                if (getallheaders()['delete']) {
+                    $this->destroy($this->productId);
+                } else {
+                    $this->store();
+                }
                 break;
             case 'PUT':
                 $this->update($this->productId);

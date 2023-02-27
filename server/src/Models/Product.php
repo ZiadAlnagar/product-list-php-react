@@ -91,8 +91,14 @@ abstract class Product
         int $type,
         $attribute
     ) {
-        $classType = ucfirst(array_search($type, self::$types, true));
-        $class = __NAMESPACE__ . '\\' . $classType;
+        $type = array_search($type, self::$types, true);
+        $productType = '';
+        if ($type === 'dvd')
+            $productType = strtoupper($type);
+        else {
+            $productType = ucfirst($type);
+        }
+        $class = __NAMESPACE__ . '\\' . $productType;
         return new $class($sku, $name, $price, $attribute);
     }
 
@@ -179,7 +185,7 @@ abstract class Product
     public static function loadDependencies(DB $db, LoggerInterface $logger): void
     {
         self::setDB($db);
-        if (! isset(self::$logger)) {
+        if (!isset(self::$logger)) {
             self::$logger = $logger;
         }
     }
@@ -224,7 +230,7 @@ abstract class Product
 
     private static function setDB(DB $db)
     {
-        if (! isset(self::$db)) {
+        if (!isset(self::$db)) {
             self::$db = $db;
             self::$tbl = $db::$table;
         }
@@ -235,7 +241,7 @@ abstract class Product
     {
         $type = strtolower($type);
         try {
-            if (! isset(self::$types[$type])) {
+            if (!isset(self::$types[$type])) {
                 throw new Exception("Product type `{$type}` doesn't exist.");
             }
         } catch (Exception $e) {

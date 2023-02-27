@@ -11,6 +11,8 @@ const Input = ({
   errMsg,
   placeholder,
   varType,
+  min,
+  max,
   children,
   ...rest
 }) => (
@@ -24,6 +26,8 @@ const Input = ({
       onChange={onChange}
       onBlur={onBlur}
       placeholder={placeholder}
+      min={null}
+      max={null}
       {...rest}
     />
     <InputError message={errMsg} />

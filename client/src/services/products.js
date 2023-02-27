@@ -24,7 +24,16 @@ const update = async (id, obj) => {
 };
 
 const destroy = async (ids) => {
-  const response = await axios.delete(baseUrl, { data: { ids } });
+  const response = await axios.post(
+    baseUrl,
+    { data: { ids } },
+    {
+      headers: {
+        delete: true,
+      },
+    },
+  );
+  // const response = await axios.delete(baseUrl, { data: { ids } });
   return response.data;
 };
 

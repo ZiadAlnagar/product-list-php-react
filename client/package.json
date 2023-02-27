@@ -20,6 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:server": "cross-env BUILD_PATH='../server/public' react-scripts build",
     "test": "react-scripts test",
     "test:once": "cross-env CI=true npm test",
     "test:coverage": "cross-env CI=true npm test -- --coverage",

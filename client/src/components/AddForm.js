@@ -174,7 +174,7 @@ const field = {
     min: '0.99',
   },
   type: {
-    id: 'type',
+    id: 'productType',
     required: true,
   },
   attributes: {

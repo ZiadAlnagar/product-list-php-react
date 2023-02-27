@@ -19,8 +19,8 @@ const Add = () => {
     <div>
       <Header>
         <PageTitle text='Product Add'>
-          <Button label='save' onClick={saveBtnClick} />
-          <Button label='cancel' onClick={cancelBtnClick} />
+          <Button label='Save' onClick={saveBtnClick} />
+          <Button label='Cancel' onClick={cancelBtnClick} />
         </PageTitle>
       </Header>
       <div className='main'>
