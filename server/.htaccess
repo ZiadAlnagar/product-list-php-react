@@ -1,0 +1,6 @@
+RewriteEngine On
+
+DirectoryIndex index.php
+
+ReWriteCond %{REQUEST_URI} !^.*((.)(.js|.css|.png|.json|.ico|.txt|.gif|.jpg))$
+RewriteRule ^ index.php
