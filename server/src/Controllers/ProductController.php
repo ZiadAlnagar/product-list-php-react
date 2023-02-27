@@ -41,7 +41,7 @@ class ProductController
                 }
                 break;
             case 'POST':
-                if (getallheaders()['delete']) {
+                if (isset(getallheaders()['x-delete'])) {
                     $this->destroy($this->productId);
                 } else {
                     $this->store();

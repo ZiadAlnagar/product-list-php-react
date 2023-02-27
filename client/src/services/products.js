@@ -26,10 +26,10 @@ const update = async (id, obj) => {
 const destroy = async (ids) => {
   const response = await axios.post(
     baseUrl,
-    { data: { ids } },
+    { ids },
     {
       headers: {
-        delete: true,
+        'x-delete': 1,
       },
     },
   );

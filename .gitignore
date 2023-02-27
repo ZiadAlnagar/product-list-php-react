@@ -5,7 +5,7 @@ vendor
 
 .env
 
-public
+client/public
 
 logs
 reports

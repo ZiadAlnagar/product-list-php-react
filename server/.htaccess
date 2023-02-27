@@ -1,6 +1,6 @@
 RewriteEngine On
 
-DirectoryIndex index.php
+DirectoryIndex index.php index.html
 
 # Redirects any request to index.php except assets
 ReWriteCond %{REQUEST_URI} !^.*((.)(.js|.css|.png|.json|.ico|.txt|.gif|.jpg))$
